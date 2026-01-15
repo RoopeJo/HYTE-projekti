@@ -1,0 +1,14 @@
+# test HTTP requests
+### use with: HTTP client extension
+
+### Get all items
+GET http://localhost:3000/items
+
+
+### Add new item
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{
+  "name": "Appelsiini",
+}
