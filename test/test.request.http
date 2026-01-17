@@ -10,5 +10,20 @@ POST http://localhost:3000/items
 Content-Type: application/json
 
 {
-  "name": "Appelsiini",
+  "name": "Appelsiini"
+}
+
+### Get item by ID
+GET http://localhost:3000/items/1
+
+### delete route for item
+DELETE http://localhost:3000/items/1
+
+
+### Put route for item
+PUT http://localhost:3000/items/1
+Content-Type: application/json
+
+{
+  "name": "Porkkana"
 }

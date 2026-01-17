@@ -31,14 +31,38 @@ app.get('/items/:id', (req, res) => {
     return res.status(404).json({message: 'Item not found'});
   }
 });
-// TODO: add PUT Route for items
-// TODO: add DELETE Route for items
+
+// PUT Route for items
+app.put('/items/:id', (req, res) => {
+  const itemIndex = items.findIndex(item => item.id == req.params.id);
+  if (itemIndex !== -1) {
+    const newId = items[itemIndex].id;
+    items[itemIndex] = { ...req.body, id: newId };
+    res.json({message: 'Item updated'});
+  } else {
+    res.status(404).json({message: 'Item not found'});
+  }
+});
+
+// DELETE Route for items
+app.delete('/items/:id', (req, res) => {
+  const itemIndex = items.findIndex(item => item.id == req.params.id);
+  if (itemIndex !== -1) {
+    items.splice(itemIndex, 1);
+    res.json({message: 'Item deleted'});
+  } else {
+    res.status(404).json({message: 'Item not found'});
+  }
+});
+
 
 // Add a new item
 app.post('/items', (req, res) => {
     // console.log('add item request body:', req.body);
-    // TODO: Lisää id listaan lisättällä objektille
-    items.push(req.body);
+    // Lisätty id listaan lisättävällä objektille
+    const newId = items.length > 0 ? Math.max(...items.map(item => item.id)) + 1 : 1;
+    const newItem = { ...req.body, id: newId };
+    items.push(newItem);
     res.status(201).json({message: 'Item added'});
 });
 
