@@ -1,5 +1,6 @@
 import express from 'express';
 import {deleteItemById, getItemById, getItems, postNewItem, putItemById} from './items.js';
+import {getUsers, postUser} from './users.js';
 const hostname = '127.0.0.1';
 const app = express();
 const port = 3000;
@@ -18,19 +19,38 @@ app.get('/api', (req, res) => {
 // Endpoints for 'items' resource
 
 // Get all items
-app.get('/items', getItems);
+app.get('/api/items', getItems);
 
 // Get item based on id
-app.get('/items/:id', getItemById);
+app.get('/api/items/:id', getItemById);
 
 // PUT route for items
-app.put('/items/:id', putItemById);
+app.put('/api/items/:id', putItemById);
 
 // DELETE route for items
-app.delete('/items/:id', deleteItemById);
+app.delete('/api/items/:id', deleteItemById);
 
 // Add new item
-app.post('/items', postNewItem);
+app.post('/api/items', postNewItem);
+
+//Get all users
+app.get('/api/users', getUsers);
+
+// Post new user
+app.post('/api/users', postUser);
+
+// Post user Login
+app.post('/api/users/login');
+
+// TODO: get user by id
+app.get('/api/users/:id');
+
+// TODO get uder by id
+// app.get('/api/users/:id');
+
+//TODO put user by id
+
+//TODO delete uder by id
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);

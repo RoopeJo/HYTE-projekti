@@ -27,3 +27,40 @@ Content-Type: application/json
 {
   "name": "Porkkana"
 }
+
+// user endpoints
+
+### Get all users
+GET {{apiurl}}/users
+
+### Register new user
+POST {{apiurl}}/users
+Content-Type: application/json
+
+
+{
+  "username": "donald",
+  "password": "duck",
+  "email": "donald@example.com"
+},
+
+
+### Register new user FAIL when email missing
+POST {{apiurl}}/users
+Content-Type: application/json
+
+
+{
+  "username": "donald",
+  "password": "duck"
+},
+
+### User login
+POST {{apiurl}}/users/login
+Content-Type: application/json
+
+
+{
+  "username": "donald",
+  "password": "duck"
+},
