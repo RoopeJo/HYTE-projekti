@@ -1,12 +1,13 @@
 # test HTTP requests
 ### use with: HTTP client extension
 
+@apiurl = http://localhost:3000/api
 ### Get all items
-GET http://localhost:3000/items
+GET {{apiurl}}/items
 
 
 ### Add new item
-POST http://localhost:3000/items
+POST {{apiurl}}/items
 Content-Type: application/json
 
 {
@@ -14,14 +15,13 @@ Content-Type: application/json
 }
 
 ### Get item by ID
-GET http://localhost:3000/items/1
+GET {{apiurl}}/items/1
 
 ### delete route for item
-DELETE http://localhost:3000/items/1
-
+DELETE {{apiurl}}/items/1
 
 ### Put route for item
-PUT http://localhost:3000/items/1
+PUT {{apiurl}}/items/1
 Content-Type: application/json
 
 {
