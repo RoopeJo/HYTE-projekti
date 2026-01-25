@@ -45,12 +45,13 @@ app.post('/api/users/login');
 // TODO: get user by id
 app.get('/api/users/:id');
 
-// TODO get uder by id
 // app.get('/api/users/:id');
 
-//TODO put user by id
+// Put user by id
+app.put('/api/users/:id');
 
-//TODO delete uder by id
+// Delete user by id
+app.delete('/api/users/:id');
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
