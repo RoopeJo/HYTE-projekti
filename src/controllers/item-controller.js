@@ -1,9 +1,4 @@
-// Dummy mock data (nollautuu aina, kun sovelluksen käynnistää uudelleen)
-const items = [
-  {id: 1, name: 'Omena'},
-  {id: 2, name: 'Appelsiini'},
-  {id: 3, name: 'Banaaneja'},
-];
+import items from "../models/item-model.js";
 
 const getItems = (req, res) => {
   res.json(items);
@@ -43,11 +38,13 @@ const deleteItemById = (req, res) => {
 
 const postNewItem = (req, res) => {
   //console.log('add item request body', req.body);
+  
   // name is mandatory property for new item
   if (!req.body.name) {
     // jos nimi puuttuu, funktion suoritus loppuu ja palautetaan 400 error
     return res.status(400).json({message: 'bad request'});
   }
+
   //lisää id listaan lisättävälle objektille
   const newId =
     items.length > 0 ? Math.max(...items.map((item) => item.id)) + 1 : 1;

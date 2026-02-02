@@ -1,44 +1,19 @@
-// Users mock data and endpoints
-
-const users = [
-  {
-    id: 1,
-    username: "johndoe",
-    password: "password1",
-    email: "johndoe@example.com"
-  },
-  {
-    id: 2,
-    username: "janedoe",
-    password: "password2",
-    email: "janedoe@example.com"
-  },
-  {
-    id: 3,
-    username: "bobsmith",
-    password: "password3",
-    email: "bobsmith@example.com"
-  }
-];
-    
-// Users endpoints
+import users from '../models/user-models.js';
 
 const getUsers = (request, response) => {
 // ÄLÄ IKINÄ LÄHETÄ SALASANOJA HTTP VASTAUKSESSA!
 for(let i=0; i<users.length; i++) {
    delete users [i].password;
-
 // Sensuroi myös emailit
 // users[i].email = 'sensored';
 }
 response.json(users);   
 };
 
-// TODO: getUserById
-//
 
 // Käyttäjän lisäys (rekisteröityminen)
 const postUser = (request, response) => {
+
 // UUsilla käyytäjllä pitää olla kaikki vaaditut ominaisuudet
 // itse koodattu erittäin yksinkertainen syötteen validointi
 if (!(newUser.username && newUser.password && newUser.email)) {
@@ -75,4 +50,4 @@ const postlogin = (request, response) => {
 response.status(404).json({error: 'user not found'});
 };
 
-export {getUsers, postUser, postlogin}
+export {getUsers, postUser, postlogin, getUserById, putUserById, deleteUserById};

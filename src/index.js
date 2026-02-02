@@ -1,9 +1,14 @@
 import express from 'express';
-import {deleteItemById, getItemById, getItems, postNewItem, putItemById} from './items.js';
-import {getUsers, postUser} from './users.js';
+import cors from 'cors';
+import itemRouter from './routes/item-router.js';
+import userRouter from './routes/user.router.js';
+import requestLogger from './middlewares/loggers.js';
 const hostname = '127.0.0.1';
 const app = express();
 const port = 3000;
+
+// enable CORS
+app.use(cors());
 
 // parsitaan json data pyynnöstä ja lisätään request-objektiin
 app.use(express.json());
@@ -11,47 +16,20 @@ app.use(express.json());
 // tarjoillaan webbisivusto (front-end) palvelimen juuressa
 app.use('/', express.static('public'));
 
+// Oma loggeri middleware, käytössä koko sovelluksen laajuisesti eli käsittelee kaikki HTTP-pyynnöt
+app.use(requestLogger);
+
 // API root
 app.get('/api', (req, res) => {
   res.send('This is dummy items API!');
 });
 
-// Endpoints for 'items' resource
+// Dummy items resource
+app.use('/api/items', itemRouter);
 
-// Get all items
-app.get('/api/items', getItems);
+// Users resource router for all  api/users routes
+app.use('/api/users', userRouter);
 
-// Get item based on id
-app.get('/api/items/:id', getItemById);
-
-// PUT route for items
-app.put('/api/items/:id', putItemById);
-
-// DELETE route for items
-app.delete('/api/items/:id', deleteItemById);
-
-// Add new item
-app.post('/api/items', postNewItem);
-
-//Get all users
-app.get('/api/users', getUsers);
-
-// Post new user
-app.post('/api/users', postUser);
-
-// Post user Login
-app.post('/api/users/login');
-
-// TODO: get user by id
-app.get('/api/users/:id');
-
-// app.get('/api/users/:id');
-
-// Put user by id
-app.put('/api/users/:id');
-
-// Delete user by id
-app.delete('/api/users/:id');
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
