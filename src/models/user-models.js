@@ -1,4 +1,7 @@
 
+import promisePool from '../utils/database.js';
+console.log('db connection test', promisePool);
+
 const users = [
   {
     id: 1,
