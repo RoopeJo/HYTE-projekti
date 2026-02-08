@@ -1,8 +1,8 @@
 import express from 'express';
-import {getUsers, postUser, postLogin } from '../controllers/user-controller.js';
-import { getUserById } from '../controllers/user-controller';
-import { putUserById } from '../controllers/user-controller';
-import { deleteUserById } from '../controllers/user-controller';
+import {getUsers, postUser,} from '../controllers/user-controller.js';
+// import { getUserById } from '../controllers/user-controller.js';
+// import { putUserById } from '../controllers/user-controller.js';
+// import { deleteUserById } from '../controllers/user-controller.js';
 
 
 const userRouter = express.Router();
@@ -15,15 +15,15 @@ userRouter.route('/')
 .post(postUser);
 
 // Post user Login
-userRouter.post('/login',postLogin);
+// userRouter.post('/login',postLogin);
 
 // Get user by id
-userRouter.get('/login',getUserById);
+// userRouter.get('/login',getUserById);
 
 // Put user by id
-userRouter.put('/login',putUserById);
+// userRouter.put('/login',putUserById);
 
 // Delete user by id
-userRouter.delete('/login',deleteUserById);
+// userRouter.delete('/login',deleteUserById);
 
 export default userRouter;

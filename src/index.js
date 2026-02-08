@@ -3,6 +3,7 @@ import cors from 'cors';
 import itemRouter from './routes/item-router.js';
 import userRouter from './routes/user.router.js';
 import requestLogger from './middlewares/loggers.js';
+import entryRouter from './routes/entry-router.js';
 const hostname = '127.0.0.1';
 const app = express();
 const port = 3000;
@@ -21,8 +22,11 @@ app.use(requestLogger);
 
 // API root
 app.get('/api', (req, res) => {
-  res.send('This is dummy items API!');
+  res.send('Example healtdiary API');
 });
+
+// Diary entries resource
+app.use('/api/entries', entryRouter);
 
 // Dummy items resource
 app.use('/api/items', itemRouter);

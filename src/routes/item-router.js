@@ -5,31 +5,28 @@ import {
   getItems,
   postNewItem,
   putItemById,
-} from '../controllers/item-controller';
+} from '../controllers/item-controller.js';
 
 const itemRouter = express.Router();
 
-// Endpoints for 'items' resource
+// All endpoints for 'items' resource
 
 itemRouter
-// Define route
-.route('/', getItems)
-// Get all items
-.get(getItems)
-// Add new item
-.post(postNewItem)
+  // define route
+  .route('/')
+  // Get all items
+  .get(getItems)
+  // Add new item
+  .post(postNewItem);
 
 itemRouter
-  // Define sub route
+  // define sub route
   .route('/:id')
-  // GET route for items
+  // Get item based on id
   .get(getItemById)
   // PUT route for items
   .put(putItemById)
-    // DELETE route for items
+  // DELETE route for items
   .delete(deleteItemById);
-
-// Add new item
-itemRouter.post('/', postNewItem);
 
 export default itemRouter;
