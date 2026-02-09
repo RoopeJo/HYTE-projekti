@@ -1,4 +1,6 @@
-import {findUserByUsername} from "../models/user-models.js";
+import { findAllUsers, findUserById, createUser, findUserByUsername } from '../models/user-models.js';
+import promisePool from '../utils/database.js';
+
 
 // TODO: lisää tietokanta funktiot user modeliin ja käytä niitä täällä
  
@@ -7,24 +9,102 @@ import {findUserByUsername} from "../models/user-models.js";
 // TODO: Refaktoroi tietokanta funktiolle
 
 
-
-const getUsers = (request, response) => {
-// ÄLÄ IKINÄ LÄHETÄ SALASANOJA HTTP VASTAUKSESSA!
-
-for(let i=0; i<users.length; i++) {
-   delete users [i].password;
-
-// Sensuroi myös emailit
-// users[i].email = 'sensored';
-}
-response.json(users);   
+const getUsers = async (request, response) => {
+  try {
+    const users = await findAllUsers();
+    // Älä ikinä lähetä salasanoja HTTP vastauksessa!
+    users.forEach(u => delete u.password);
+    return response.json(users);
+  } catch (err) {
+    console.error('getUsers error:', err);
+    return response.status(500).json({ error: 'error' });
+  }
 };
 
+
+
 // TODO: getUserById
-    
+const getUserById = async (request, response) => {
+  try {
+    const { id } = request.params;
+
+    const user = await findUserById(id);
+    if (!user) {
+      return response.status(404).json({ error: 'user not found' });
+    }
+    // poista salasana vastauksesta
+    delete user.password;
+
+    return response.json(user);
+  } catch (err) {
+    console.error('getUserById error:', err);
+    return response.status(500).json({ error: 'internal server error' });
+  }
+};
+
+
+
+
 // TODO: putUserByID
+const putUserById = async (request, response) => {
+    try {
+        const { id } = request.params;
+        const { username, email } = request.body;
+
+        // Katsotaan löytyykö käyttäjä
+        const user = await findUserById(id);
+        if (!user) {
+            return response.status(404).json({ error: 'user not found' });
+        }
+
+        // Päivitä/Lisää käyttäjä
+        const sql = `
+            UPDATE Users
+            SET username = ?, email = ?
+            WHERE id = ?
+        `;
+        await promisePool.execute(sql, [username, email, id]);
+
+        // Hakee käyttäjän ja palautaa ilman salasanaa
+        const updated = await findUserById(id);
+        if (updated) delete updated.password;
+
+        response.json(updated);
+
+    } catch (err) {
+        console.error('putUserById error:', err);
+        response.status(500).json({ error: 'internal server error' });
+    }
+};
+
+
 
 // TODO: deleteUserById
+const deleteUserById = async (request, response) => {
+  try {
+    const { id } = request.params;
+
+    // Tarkista että käyttäjä olemassa
+    const existing = await findUserById(id);
+    if (!existing) {
+      return response.status(404).json({ error: 'user not found' });
+    }
+
+    const sql = 'DELETE FROM Users WHERE id = ?';
+    const [result] = await promisePool.execute(sql, [id]);
+
+    if (!result || result.affectedRows === 0) {
+      return response.status(404).json({ error: 'user not found' });
+    }
+
+    return response.status(204).send();
+  } catch (err) {
+    console.error('deleteUserById error:', err);
+    return response.status(500).json({ error: 'internal server error' });
+  }
+};
+``
+
 
 
 
@@ -71,4 +151,4 @@ const postlogin = async (request, response) => {
 response.status(404).json({error: 'user not found'});
 };
 
-export {getUsers, postUser, postlogin};
+export {getUsers, getUserById, putUserById, deleteUserById, postUser, postlogin};
