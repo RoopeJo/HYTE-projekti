@@ -1,9 +1,9 @@
 import express from 'express';
 import {getMe, getUsers, postUser, postlogin} from '../controllers/user-controller.js';
 import { authenticateToken } from '../middlewares/authentication.js';
-// import { getUserById } from '../controllers/user-controller.js';
-// import { putUserById } from '../controllers/user-controller.js';
-// import { deleteUserById } from '../controllers/user-controller.js';
+import { getUserById } from '../controllers/user-controller.js';
+import{ putUserById } from '../controllers/user-controller.js';
+import { deleteUserById } from '../controllers/user-controller.js';
 
 
 const userRouter = express.Router();

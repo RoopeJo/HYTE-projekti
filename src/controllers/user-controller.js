@@ -1,4 +1,4 @@
-import {findUserByUsername, findUserById, postUser,  } from "../models/user-models.js";
+import {findUserByUsername,findAllUsers, findUserById, createUser,} from "../models/user-models.js";
 import jwt from 'jsonwebtoken';
 // TODO: lisää tietokanta funktiot user modeliin ja käytä niitä täällä
 // TODO: Refaktoroi tietokanta funktiolle   
