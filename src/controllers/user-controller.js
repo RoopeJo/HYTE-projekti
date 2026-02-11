@@ -3,18 +3,19 @@ import jwt from 'jsonwebtoken';
 // TODO: lisää tietokanta funktiot user modeliin ja käytä niitä täällä
 // TODO: Refaktoroi tietokanta funktiolle   
 
-
-const getUsers = (request, response) => {
-// ÄLÄ IKINÄ LÄHETÄ SALASANOJA HTTP VASTAUKSESSA!
-
-for(let i=0; i<users.length; i++) {
-   delete users [i].password;
-
-// Sensuroi myös emailit
-// users[i].email = 'sensored';
-}
-response.json(users);   
+const getUsers = async (request, response) => {
+  try {
+    const users = await findAllUsers();
+    // Älä ikinä lähetä salasanoja HTTP vastauksessa!
+    users.forEach(u => delete u.password);
+    return response.json(users);
+  } catch (err) {
+    console.error('getUsers error:', err);
+    return response.status(500).json({ error: 'error' });
+  }
 };
+
+
 
 // TODO: getUserById
 const getUserById = async (request, response) => {

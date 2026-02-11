@@ -9,11 +9,12 @@ import { authenticateToken } from '../middlewares/authentication.js';
 const userRouter = express.Router();
 
 // USERS resource endpoints
-userRouter.route('/')
+
 //Get all users
-.get(getUsers)
+userRouter.get('/', getUsers)
+
 // Post new user
-.post(postUser);
+userRouter.post('/', postUser);
 
 // Get user info based on token
 userRouter.get('/me', authenticateToken, getMe);
@@ -22,12 +23,12 @@ userRouter.get('/me', authenticateToken, getMe);
 userRouter.post('/login',postlogin);
 
 // Get user by id
-// userRouter.get('/login',getUserById);
+userRouter.get('/id',getUserById);
 
 // Put user by id
-// userRouter.put('/login',putUserById);
+userRouter.put('/id',putUserById);
 
 // Delete user by id
-// userRouter.delete('/login',deleteUserById);
+userRouter.delete('/id',deleteUserById);
 
 export default userRouter;
